@@ -1,0 +1,12 @@
+" Press ? for help
+
+.. (up a dir)
+</component_app/
+▾ [✗]app/
+  ▸ [✗]common/
+  ▸ [✗]components/
+    app.component.js
+    app.js
+▸ [✗]node_modules/
+▸ [✗]server/
+  [✹]package.json

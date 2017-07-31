@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "create": "touch ./server/public/app.js",
-    "build": "browserify -t babelify -t uglifyify ./app/app.js -o ./server/public/app.js",
+    "build": "browserify -t babelify ./app/app.js -o ./server/public/app.js",
     "watch": "watchify -t babelify ./app/app.js -o ./server/public/app.js --debug",
     "postinstall": "npm run create && npm run build",
     "dev": "nodemon ./server/index.js",
@@ -25,5 +25,8 @@
     "nodemon": "^1.11.0",
     "parallelshell": "^3.0.1",
     "watchify": "^3.9.0"
+  },
+  "devDependencies": {
+    "babelify": "^7.3.0"
   }
 }

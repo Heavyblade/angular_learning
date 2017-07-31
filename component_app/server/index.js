@@ -24,7 +24,7 @@ app.get('/api/speakers/:id', (req, res) => {
 });
 
 // envía el index.html para la SPA.
-app.get('*', (req, res, next) => {
+app.get('/', (req, res, next) => {
   if (req.accepts('html')) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'))
   } else {
