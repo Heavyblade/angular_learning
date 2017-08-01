@@ -1,10 +1,7 @@
-import controller from './speaker-list.controller';
+import { SpeakerListController } from "./speaker-list.controller";
 
 export const SpeakerListComponent = {
     bindings: { speakers: "<" },
-    controller: controller,
-    template: `<ul class="collection">
-                  <speaker-item ng-repeat="speaker in $ctrl.speakers" data="speaker">
-                  </speaker-item>
-              </ul>`
+    controller: SpeakerListController,
+    template: `<h1> Hola speakers </h1>`
 };

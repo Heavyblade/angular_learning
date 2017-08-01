@@ -1,37 +1,35 @@
-import angular from 'angular';
+import angular  from 'angular';
+import uiRouter from 'angular-ui-router';
 
-import { SpeakerItemComponent } from "./speaker-list/speaker-item.component";
-import { SpeakerListComponent } from "./speaker-list/speaker-list.component";
+import { SpeakerItemComponent }   from "./speaker-list/speaker-item.component";
+import { SpeakerListComponent }   from "./speaker-list/speaker-list.component";
 import { SpeakerDetailComponent } from "./speaker-detail/speaker-detail.component";
-import { TestComponent } from "../test/test_component";
-
-import { speakerService } from "./speaker.service";
+import { SpeakerService }         from "./speaker.service";
+import { TestComponent }          from "../test/test_component";
 
 const speaker = angular
-      .module("speakers", [])
-      .service("speakerService", speakerService)
-      .component("SpeakerItem", SpeakerItemComponent)
-      .component("SpeakerList", SpeakerListComponent)
-      .component("SpeakerDetail", SpeakerDetailComponent)
-      .component("TestComponent", TestComponent)
+      .module("speakers", [uiRouter])
+      .service("SpeakerService",  SpeakerService)
+      .component("speakerList",   SpeakerListComponent)
+      .component("speakerItem",   SpeakerItemComponent)
+      .component("speakerDetail", SpeakerDetailComponent)
+      .component("testComponent", TestComponent)
       .config(($stateProvider, $urlRouterProvider) => {
           $stateProvider
-            .state("test2", {
-              url: "/test2",
-              component: "TestComponent"
+            .state("tests", {
+              url: "/",
+              component: "testComponent"
             })
             .state("speakers", {
-              url: "/",
-              component: "SpeakerList",
-              resolve: {
-                speakers: (speakerService, $stateParams) => speakerService.getSpeakers()
-              }
+              url: "/speakers",
+              component: "speakerList",
+              resolve: { speakers: [] }
             })
             .state("speaker", {
               url: "/speakers/:id",
-              component: "SpeakerDetail",
+              component: "speakerDetail",
               resolve: {
-                speaker: (speakerService, $stateParams) => speakerService.getSpeaker($stateParams.id)
+                speaker: (SpeakerService, $stateParams) => SpeakerService.getSpeaker($stateParams.id)
               }
             });
 

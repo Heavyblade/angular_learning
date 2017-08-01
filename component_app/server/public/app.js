@@ -12,7 +12,7 @@ var AppComponent = exports.AppComponent = {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+             value: true
 });
 
 var _angular = require('angular');
@@ -33,25 +33,18 @@ var _components2 = _interopRequireDefault(_components);
 
 var _app = require('./app.component');
 
-var _test_component = require('./components/test/test_component');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var root = _angular2.default.module('angularCamp', [_angularUiRouter2.default, _common2.default, _components2.default]).component('acApp', _app.AppComponent).component("testComponent", _test_component.TestComponent).config(function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state("tests", {
-    url: "/",
-    component: "testComponent"
-  });
-}).name;
+var root = _angular2.default.module('angularCamp', [_angularUiRouter2.default, _common2.default, _components2.default]).component('acApp', _app.AppComponent).name;
 
 //document.addEventListener( "DOMContentLoaded", () => angular.bootsrap(document, ['angularCamp']) );
 _angular2.default.element(document).ready(function () {
-  _angular2.default.bootstrap(document, ['angularCamp']);
+             _angular2.default.bootstrap(document, ['angularCamp']);
 });
 
 exports.default = root;
 
-},{"./app.component":1,"./common/common":3,"./components/components":6,"./components/test/test_component":13,"angular":102,"angular-ui-router":90}],3:[function(require,module,exports){
+},{"./app.component":1,"./common/common":3,"./components/components":6,"angular":102,"angular-ui-router":90}],3:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -88,7 +81,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var HeaderComponent = exports.HeaderComponent = {
-  template: "<nav>\n              <div class=\"nav-wrapper red darken-4\">\n                <a href=\"#\" class=\"brand-logo center\">AngularCamp 2016</a>\n                <a ui-sref=\"tests\">Estado1</a>\n              </div>\n            </nav>\n            "
+  template: "<nav>\n              <div class=\"nav-wrapper red darken-4\">\n                <a href=\"#\" class=\"brand-logo center\">AngularCamp 2016</a>\n                <a ui-sref=\"tests\">Estado1</a>\n                <a ui-sref=\"speakers\">Speakers</a>\n                <a href=\"#!/speakers/1\">Mi speaker</a>\n              </div>\n            </nav>\n            "
 };
 
 },{}],6:[function(require,module,exports){
@@ -108,51 +101,51 @@ var _speaker2 = _interopRequireDefault(_speaker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var components = _angular2.default.module("angularCamp", ['speaker']).name;
+var components = _angular2.default.module("app.components", [_speaker2.default]).name;
 
 exports.default = components;
 
 },{"./speaker":7,"angular":102}],7:[function(require,module,exports){
-"use strict";
+'use strict';
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _angular = require("angular");
+var _angular = require('angular');
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _speakerItem = require("./speaker-list/speaker-item.component");
+var _angularUiRouter = require('angular-ui-router');
 
-var _speakerList = require("./speaker-list/speaker-list.component");
+var _angularUiRouter2 = _interopRequireDefault(_angularUiRouter);
 
-var _speakerDetail = require("./speaker-detail/speaker-detail.component");
+var _speakerItem = require('./speaker-list/speaker-item.component');
 
-var _test_component = require("../test/test_component");
+var _speakerList = require('./speaker-list/speaker-list.component');
 
-var _speaker = require("./speaker.service");
+var _speakerDetail = require('./speaker-detail/speaker-detail.component');
+
+var _speaker = require('./speaker.service');
+
+var _test_component = require('../test/test_component');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var speaker = _angular2.default.module("speakers", []).service("speakerService", _speaker.speakerService).component("SpeakerItem", _speakerItem.SpeakerItemComponent).component("SpeakerList", _speakerList.SpeakerListComponent).component("SpeakerDetail", _speakerDetail.SpeakerDetailComponent).component("TestComponent", _test_component.TestComponent).config(function ($stateProvider, $urlRouterProvider) {
-  $stateProvider.state("test2", {
-    url: "/test2",
-    component: "TestComponent"
-  }).state("speakers", {
+var speaker = _angular2.default.module("speakers", [_angularUiRouter2.default]).service("SpeakerService", _speaker.SpeakerService).component("speakerList", _speakerList.SpeakerListComponent).component("speakerItem", _speakerItem.SpeakerItemComponent).component("speakerDetail", _speakerDetail.SpeakerDetailComponent).component("testComponent", _test_component.TestComponent).config(function ($stateProvider, $urlRouterProvider) {
+  $stateProvider.state("tests", {
     url: "/",
-    component: "SpeakerList",
-    resolve: {
-      speakers: function speakers(speakerService, $stateParams) {
-        return speakerService.getSpeakers();
-      }
-    }
+    component: "testComponent"
+  }).state("speakers", {
+    url: "/speakers",
+    component: "speakerList",
+    resolve: { speakers: [] }
   }).state("speaker", {
     url: "/speakers/:id",
-    component: "SpeakerDetail",
+    component: "speakerDetail",
     resolve: {
-      speaker: function speaker(speakerService, $stateParams) {
-        return speakerService.getSpeaker($stateParams.id);
+      speaker: function speaker(SpeakerService, $stateParams) {
+        return SpeakerService.getSpeaker($stateParams.id);
       }
     }
   });
@@ -162,7 +155,7 @@ var speaker = _angular2.default.module("speakers", []).service("speakerService",
 
 exports.default = speaker;
 
-},{"../test/test_component":13,"./speaker-detail/speaker-detail.component":8,"./speaker-list/speaker-item.component":9,"./speaker-list/speaker-list.component":10,"./speaker.service":12,"angular":102}],8:[function(require,module,exports){
+},{"../test/test_component":13,"./speaker-detail/speaker-detail.component":8,"./speaker-list/speaker-item.component":9,"./speaker-list/speaker-list.component":10,"./speaker.service":12,"angular":102,"angular-ui-router":90}],8:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -177,13 +170,16 @@ var SpeakerDetailComponent = exports.SpeakerDetailComponent = {
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-            value: true
+  value: true
 });
-//import controller from './speaker-item.controller';
+// /app/components/speaker/speaker-item/speaker-item.component.js
+// import controller from './speaker-item.controller'
 
 var SpeakerItemComponent = exports.SpeakerItemComponent = {
-            bindings: { data: '<' },
-            template: '<li class="collection-item avatar" style="border-bottom: 1px solid #cccccc;">\n                <img class="circle" width="96px" ng-src="{{$ctrl.data.photo}}" alt="{{$ctrl.data.name}}" />\n                <span class="title">{{$ctrl.data.name}}</span>\n                <p><a ng-href="#/speakers/{{$ctrl.data.id}}">{{$ctrl.data.talk}}</a></p>\n              </li>'
+  bindings: {
+    data: '<'
+  },
+  template: '\n    <li class="collection-item avatar" style="border-bottom: 1px solid #cccccc;">\n      <img class="circle" width="96px" ng-src="{{$ctrl.data.photo}}" alt="{{$ctrl.data.name}}" />\n      <span class="title">{{$ctrl.data.name}}</span>\n      <p><a ng-href="#/speakers/{{$ctrl.data.id}}">{{$ctrl.data.talk}}</a></p>\n    </li>\n  '
 };
 
 },{}],10:[function(require,module,exports){
@@ -196,21 +192,17 @@ exports.SpeakerListComponent = undefined;
 
 var _speakerList = require("./speaker-list.controller");
 
-var _speakerList2 = _interopRequireDefault(_speakerList);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var SpeakerListComponent = exports.SpeakerListComponent = {
     bindings: { speakers: "<" },
-    controller: _speakerList2.default,
-    template: "<ul class=\"collection\">\n                  <speaker-item ng-repeat=\"speaker in $ctrl.speakers\" data=\"speaker\">\n                  </speaker-item>\n              </ul>"
+    controller: _speakerList.SpeakerListController,
+    template: "<h1> Hola speakers </h1>"
 };
 
 },{"./speaker-list.controller":11}],11:[function(require,module,exports){
-'use strict';
+"use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+      value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -218,31 +210,42 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var SpeakerListController = function () {
-    function SpeakerListController(speakerService) {
-        _classCallCheck(this, SpeakerListController);
+      function SpeakerListController(SpeakerService) {
+            _classCallCheck(this, SpeakerListController);
 
-        this.speakerService = speakerService;
-        this.speakers = [];
-        debugger;
-        this.loadData();
-    }
+            debugger;
+            this.speakerService = SpeakerService;
+            this.speakers = [{
+                  "id": 1,
+                  "name": "Todd Motto",
+                  "country": "UK",
+                  "talk": "From .component() to @Component",
+                  "photo": "//angularcamp.org/img/people/ToddMotto.jpg"
+            }, {
+                  "id": 2,
+                  "name": "Maxim Salnikov",
+                  "country": "Norway",
+                  "talk": "'Angular Material 2: Reward your app with high-quality UI in minutes",
+                  "photo": "//angularcamp.org/img/people/MaximSalnikov.jpg"
+            }];
+      }
 
-    _createClass(SpeakerListController, [{
-        key: 'loadData',
-        value: function loadData() {
-            var _this = this;
+      _createClass(SpeakerListController, [{
+            key: "loadData",
+            value: function loadData() {
+                  var _this = this;
 
-            this.speakerService.getSpeakers().then(function (response) {
-                debugger;
-                _this.speakers = response.data;
-            });
-        }
-    }]);
+                  debugger;
+                  this.speakerService.getSpeakers().then(function (response) {
+                        _this.speakers = response.data;
+                  });
+            }
+      }]);
 
-    return SpeakerListController;
+      return SpeakerListController;
 }();
 
-SpeakerListController.$inject = ['speakerService'];
+SpeakerListController.$inject = ['SpeakerService'];
 
 exports.default = SpeakerListController;
 
@@ -250,40 +253,118 @@ exports.default = SpeakerListController;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+// /app/components/speaker/speaker.service.js
 var SpeakerService = function () {
-    function SpeakerService($http) {
-        _classCallCheck(this, SpeakerService);
+  function SpeakerService($http) {
+    _classCallCheck(this, SpeakerService);
 
-        this.$http = $http;
+    this.$http = $http;
+  }
+
+  _createClass(SpeakerService, [{
+    key: "getSpeakers",
+    value: function getSpeakers() {
+      return [{
+        "id": 1,
+        "name": "Todd Motto",
+        "country": "UK",
+        "talk": "From .component() to @Component",
+        "photo": "//angularcamp.org/img/people/ToddMotto.jpg"
+      }, {
+        "id": 2,
+        "name": "Maxim Salnikov",
+        "country": "Norway",
+        "talk": "'Angular Material 2: Reward your app with high-quality UI in minutes",
+        "photo": "//angularcamp.org/img/people/MaximSalnikov.jpg"
+      }, {
+        "id": 3,
+        "name": "Wassim Chegham",
+        "country": "France",
+        "talk": "Angular 2 Server Side Rendering",
+        "photo": "//angularcamp.org/img/people/WassimChegham.jpg"
+      }, {
+        "id": 4,
+        "name": "Sebastian Witalec",
+        "country": "UK",
+        "talk": "Sharing Code Between Web and Native Apps",
+        "photo": "//angularcamp.org/img/people/SebastianWitalec.jpg"
+      }, {
+        "id": 5,
+        "name": "Evan Schultz",
+        "country": "Canada",
+        "talk": "Building Angular 2 Application with Redux",
+        "photo": "//angularcamp.org/img/people/EvanSchultz.jpg"
+      }, {
+        "id": 6,
+        "name": "Uri Goldshtein",
+        "country": "Everywhere",
+        "talk": "Angular 2.0 with realtime GraphQL",
+        "photo": "//angularcamp.org/img/people/UriGoldshtein.png"
+      }, {
+        "id": 7,
+        "name": "Christopher Noring",
+        "country": "Sweden",
+        "talk": "TypeScript fundamentals",
+        "photo": "//angularcamp.org/img/people/ChristopherNoring.jpg"
+      }, {
+        "id": 8,
+        "name": "Uri Shaked",
+        "country": "Israel",
+        "talk": "From the World-Wide Web to the World of IoT",
+        "photo": "//angularcamp.org/img/people/UriShaked.jpg"
+      }, {
+        "id": 9,
+        "name": "Manfred Steyer",
+        "country": "Austria",
+        "talk": "Progressive Web Apps with Angular 2",
+        "photo": "//angularcamp.org/img/people/ManfredSteyer.jpg"
+      }, {
+        "id": 10,
+        "name": "Thorsten Hans",
+        "country": "Germany",
+        "talk": "Angular 2 super-charged: Native desktop power with Electron",
+        "photo": "//angularcamp.org/img/people/Thorsten_Hans.jpg"
+      }, {
+        "id": 11,
+        "name": "Vanessa Yuen",
+        "country": "Canada",
+        "talk": "Augury",
+        "photo": "//angularcamp.org/img/people/VanessaYuen.jpg"
+      }, {
+        "id": 12,
+        "name": "David Pich",
+        "country": "Spain",
+        "talk": "Open Keynote",
+        "photo": "//angularcamp.org/img/people/DavidPich.jpg"
+      }, {
+        "id": 13,
+        "name": "Johannes Weber",
+        "country": "Germany",
+        "talk": "Closing Keynote",
+        "photo": "//angularcamp.org/img/people/Jowe.jpg"
+      }];
     }
+  }, {
+    key: "getSpeaker",
+    value: function getSpeaker(id) {
+      debugger;
+      return this.$http.get("/api/speakers/" + id).then(function (response) {
+        return response.data;
+      });
+    }
+  }]);
 
-    _createClass(SpeakerService, [{
-        key: "getSpeakers",
-        value: function getSpeakers() {
-            return this.$http.get("/api/speakers").then(function (response) {
-                return response.data;
-            });
-        }
-    }, {
-        key: "getSpeaker",
-        value: function getSpeaker(speaker_id) {
-            return this.$http.get("/api/speakers/:id").then(function (response) {
-                return response.data;
-            });
-        }
-    }]);
-
-    return SpeakerService;
+  return SpeakerService;
 }();
 
-SpeakerService.$inject = ["$http"];
+SpeakerService.$inject = ['$http'];
 
 exports.default = SpeakerService;
 
@@ -316,14 +397,11 @@ Object.defineProperty(exports, "__esModule", {
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var TestController = function TestController(message) {
+var TestController = function TestController() {
   _classCallCheck(this, TestController);
 
-  debugger;
-  this.message = message;
+  this.message = "hola";
 };
-
-TestController.$inject = ["message"];
 
 exports.default = TestController;
 
